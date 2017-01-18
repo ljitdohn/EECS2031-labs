@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /*Lab 2*/
-/*This code has not been tested.*/
+/*This code has been tested.*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
@@ -10,17 +10,15 @@ int dayCount;
 int pass = 1;/*Input param. When equal to 0, finish the program.*/
 int r, b;/*Init var for rand and buy.*/
 
+void Day(), onInit(), onFinish(), Buy(), Sell();
 
 main(){
 	
 	onInit();
 	
-	do{
-	  scanf("%d", &pass);
-	  if(pass != 0){
+	while(scanf("%d", &pass) != 0){
 		Day();
-	  }
-	}while(pass != 0);
+	}
 	
 	onFinish();
 
@@ -30,7 +28,7 @@ Day(){
 	++ dayCount;/*Good morning!*/
 	changeRate2 = changeRate1;
 	changeRate1 = changeRate0;
-	changeRate0 = 1;
+	changeRate0 = 0.0;
 	
 	printf("%.2f --> %.2f      ", stockPrice, changeRate1);
 	/*In the morning, buy or sell stocks.*/
@@ -44,7 +42,7 @@ Day(){
 	}else if(changeRate2 < 1 && changeRate1 < 1){
 		b = (balance/stockPrice);
 		Buy(b);
-		printf("Bought all %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
+		printf("Bought all. %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
 	}else{
 		printf("No action.")
 	}
@@ -59,7 +57,7 @@ Day(){
 
 onInit(){
 	changeRate0 = changeRate1 = changeRate2 = 1;
-	stockPrice = 10.0;
+	stockPrice = 12.0;
 	balance = 10000.0;
 	stockOwned = 0;
 	dayCount = 0; /*Program starts at the night time.*/
