@@ -2,7 +2,7 @@
 #include <math.h>
 
 /*Lab 2*/
-/*This code is tested. There might be some problems on pseudo-random number generator.*/
+/*This code has not been tested yet!*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
@@ -44,8 +44,8 @@ Day(){
 	}
 	
 	/*In the night, stock price changes by random. Stock price only change 10% maximum per day.*/
-	r = rand() %26;
-	changeRate0 = 0.01 * r + 0.87;
+	r = rand() %30;
+	changeRate0 = 0.01 * r + 0.86;
 	
 	if(changeRate0 < 0.9){
 		changeRate0 = 0.9;
@@ -54,6 +54,7 @@ Day(){
 	}
 	
 	stockPrice = stockPrice * changeRate0;
+	printf("the price now is %.2f.", stockPrice);
 }
 
 onInit(){
@@ -65,7 +66,8 @@ onInit(){
 }
 
 onFinish(){
-	Sell(stockOwned);
+	balance = balance + stockOwned * stockPrice;
+	stockOwned = 0;
 	double settlement = balance - 10000.0;
 	printf("$""%.2f\n", settlement);
 }
