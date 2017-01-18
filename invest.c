@@ -1,13 +1,14 @@
 #include <stdio.h>
+#include <math.h>
 
 /*Lab 2*/
-/*This code has not been tested yet!*/
+/*This code is tested. There might be some problems on pseudo-random number generator.*/
 
 double stockPrice, balance;
-double changeRate0 = double changeRate1 = double changeRate2 = null; /*changeRateN means the change rate of N days before today.*/
+double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
 int stockOwned;
 int dayCount;/*Irrelevant in the program.*/
-int pass;/*Input param. When equal to 0, finish the program.*/
+int pass = 1;/*Input param. When equal to 0, finish the program.*/
 int r, b;/*Init var for rand and buy.*/
 
 main(){
@@ -15,8 +16,11 @@ main(){
 	onInit();
 	
 	do{
+	  scanf("%d", &pass);
+	  if(pass != 0){
 		Day();
-	}while(scanf("%d", &move) != 0);
+	  }
+	}while(pass != 0);
 	
 	onFinish();
 
@@ -26,16 +30,16 @@ Day(){
 	++ dayCount;/*Good morning!*/
 	changeRate2 = changeRate1;
 	changeRate1 = changeRate0;
-	changeRate0 = null;
+	changeRate0 = 1;
 	
 	/*In the morning, buy or sell stocks.*/
-	if(changeRate2 = 1.1 && changeRate1 = 1.1){
+	if(changeRate2 == 1.1 && changeRate1 == 1.1){
 		Sell(stockOwned);
 	}else if(changeRate2 >= 1.05 && changeRate1 >= 1.05){
-		b = floor(balance/stockPrice)/2;
+		b = (balance/stockPrice)/2;
 		Buy(b);
 	}else if(changeRate2 < 1 && changeRate1 < 1){
-		b = floor(balance/stockPrice);
+		b = (balance/stockPrice);
 		Buy(b);
 	}
 	
@@ -53,6 +57,7 @@ Day(){
 }
 
 onInit(){
+	changeRate0 = changeRate1 = changeRate2 = 1;
 	stockPrice = 10.0;
 	balance = 10000.0;
 	stockOwned = 0;
@@ -60,17 +65,19 @@ onInit(){
 }
 
 onFinish(){
+	Sell(stockOwned);
 	double settlement = balance - 10000.0;
 	printf("$""%.2f\n", settlement);
 }
 
 Buy(int s){
 	if(s * stockPrice > balance){
-		b = floor(stockPrice/balance);
-		Buy(b)
+		b = stockPrice/balance;
+		Buy(b);
 	}else{
 		balance = balance - s * stockPrice;
 		stockOwned = stockOwned + s;
+		printf("%d stock purchased at price $ %.2f. The balance now is %.2f.\n", s, stockPrice, balance);
 	}
 }
 
@@ -80,5 +87,6 @@ Sell(int s){
 	}else{
 		stockOwned = stockOwned - s;
 		balance = balance + s * stockPrice;
+		printf("%d stock sold at price $ %.2f. The balance now is %.2f.\n", s, stockPrice, balance);
 	}
 }
