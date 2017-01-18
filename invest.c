@@ -54,7 +54,7 @@ Day(){
 	}
 	
 	stockPrice = stockPrice * changeRate0;
-	printf("the price now is %.2f.", stockPrice);
+	printf("the price now is %.2f.\n", stockPrice);
 }
 
 onInit(){
