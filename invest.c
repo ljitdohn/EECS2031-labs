@@ -1,13 +1,12 @@
 #include <stdio.h>
-#include <math.h>
 
 /*Lab 2*/
-/*This code has not been tested yet!*/
+/*This code has been tested.*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
 int stockOwned;
-int dayCount;/*Irrelevant in the program.*/
+int dayCount;
 int pass = 1;/*Input param. When equal to 0, finish the program.*/
 int r, b;/*Init var for rand and buy.*/
 
@@ -54,7 +53,7 @@ Day(){
 	}
 	
 	stockPrice = stockPrice * changeRate0;
-	printf("the price now is %.2f.\n", stockPrice);
+	printf("Day %d: The price now is %.2f.\n", dayCount, stockPrice);
 }
 
 onInit(){
