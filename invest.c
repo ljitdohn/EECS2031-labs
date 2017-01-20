@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /*Lab 2*/
-/*This code has been tested.*/
+/*This code has been tested. Unsolved problems with the RNG.*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
@@ -9,8 +10,6 @@ int stockOwned;
 int dayCount;
 int pass = 1;/*Input param. When equal to 0, finish the program.*/
 int r, b;/*Init var for rand and buy.*/
-
-void Day(), onInit(), onFinish(), Buy(), Sell();
 
 main(){
 	
@@ -44,7 +43,7 @@ Day(){
 		Buy(b);
 		printf("Bought all. %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
 	}else{
-		printf("No action.")
+		printf("No action.");
 	}
 	
 	/*In the night, stock price changes by random.*/
