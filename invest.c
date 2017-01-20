@@ -2,22 +2,27 @@
 #include <stdlib.h>
 
 /*Lab 2*/
-/*This code has been tested. Unsolved problems with the RNG.*/
+/*This code has not been tested.*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
+double r;
 int stockOwned;
 int dayCount;
-int pass = 1;/*Input param. When equal to 0, finish the program.*/
-int r, b;/*Init var for rand and buy.*/
+int pass;/*Input param. When equal to 0, finish the program.*/
+int b;/*Init var for rand and buy.*/
 
 main(){
 	
 	onInit();
 	
-	while(scanf("%d", &pass) != 0){
-		Day();
-	}
+	do{
+	  scanf("%d", &pass);
+	  if(pass != 0){
+	    Day();
+	  }
+	
+	}while(pass != 0);
 	
 	onFinish();
 
@@ -33,25 +38,24 @@ Day(){
 	/*In the morning, buy or sell stocks.*/
 	if(changeRate2 == 1.1 && changeRate1 == 1.1){
 		Sell(stockOwned);
-		printf("Sold all. %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
+		printf("Sold all. %-6d shares remaining, and %.2f dollars remaining.\n", stockOwned, balance);
 	}else if(changeRate2 >= 1.05 && changeRate1 >= 1.05){
 		b = (balance/stockPrice)/2;
 		Buy(b);
-		printf("Bought 1/2. %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
+		printf("Bought 1/2. %-6d shares remaining, and %.2f dollars remaining.\n", stockOwned, balance);
 	}else if(changeRate2 < 1 && changeRate1 < 1){
 		b = (balance/stockPrice);
 		Buy(b);
-		printf("Bought all. %-6d shares remaining, and %2f dollars remaining.\n", stockOwned, balance);
+		printf("Bought all. %-6d shares remaining, and %.2f dollars remaining.\n", stockOwned, balance);
 	}else{
-		printf("No action.");
+		printf("No action.\n");
 	}
 	
 	/*In the night, stock price changes by random.*/
-	r = (double)rand()/(double)RAND_MAX;
-	changeRate0 = 0.3 * r + 0.85;
+	r = ((double)rand()/(double)RAND_MAX);
+	changeRate0 = (0.3 * r) + 0.85;
 	
 	stockPrice = stockPrice * changeRate0;
-	printf("Day %d: The price now is %.2f.\n", dayCount, stockPrice);
 }
 
 onInit(){
