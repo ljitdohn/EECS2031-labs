@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /*Lab 2*/
-/*This code has not been tested.*/
+/*This code has been tested.*/
 
 double stockPrice, balance;
 double changeRate0, changeRate1, changeRate2; /*changeRateN means the change rate of N days before today.*/
