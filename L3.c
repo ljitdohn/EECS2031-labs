@@ -6,9 +6,9 @@
 
 int lines;
 long stdnum[lines];
-char stdfn[lines][8];
-char stdln[lines][8];
-char cmd[8]; 
+char stdfn[lines][9];
+char stdln[lines][9];
+char cmd[9]; 
 int fin[lines];
 int midt[lines];
 float q1[lines];
@@ -24,7 +24,8 @@ int main(){
 
 onInit(){
   
-  scanf("%d", &lines);	/*get number of lines*/
+  /*get number of lines*/
+  scanf("%d", &lines);
   
   for (int i = 0; i < lines; ++i){
     readLine(i);
@@ -34,6 +35,7 @@ onInit(){
   int c;
   for(c = 0; scanf("%c", &cmd[c]) != EOF, ++c){
 	  if (cmd[c] == '\n'){
+		  cmd[++c] = '\0';
 		  executeCommand(cmd);
 		  for (i = 0; i <= c; ++i){
 			  cmd[c] = 0;
@@ -50,8 +52,10 @@ readLine(int i){
   scanf("%ld", stdnum[i]);/*scan std number*/
   
   for(c = 0; c < 8 && scanf("%c", stdfn[i][c]) != ' '; ++c);	/*scan student first name*/
+  stdfn[i][++c] = '\0';
   
-  for(c = 0; c < 8 && scanf("%c", stdln[i][c]); ++c);	/*scan student last name*/
+  for(c = 0; c < 8 && scanf("%c", stdln[i][c]) != ' '; ++c);	/*scan student last name*/
+  stdln[i][++c] = '\0';
   
   scanf("%d", fin[i]); /*scan final grade*/
   
@@ -82,7 +86,7 @@ executeCommand(char command[]){
 		quit();
 		/*do something to exit program.*/
 	}else{
-		printf("Not a valid command.\n")
+		printf("Not a valid command.\n");
 	}
 }
 
@@ -95,7 +99,19 @@ fail(){
 }
 
 top(){
+	int c;
+	double max = 0;
+  for (c = 0; c < lines; ++c){
+	 if(mark[c] >= max){
+		 max = mark[c];
+	 }
+  }
   
+  for (c = 0; c < lines; ++c){
+	 if (mark[c] == max){
+		 printf("%s\n", stdln);
+	 }
+  }
 }
 
 gradeA(){
