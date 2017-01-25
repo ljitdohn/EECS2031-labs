@@ -8,7 +8,7 @@ int lines;
 long stdnum[lines];
 char stdfn[lines][8];
 char stdln[lines][8];
-char cmd[7]; 
+char cmd[8]; 
 int fin[lines];
 int midt[lines];
 float q1[lines];
@@ -31,6 +31,15 @@ onInit(){
   }
   
   /*get command*/
+  int c;
+  for(c = 0; scanf("%c", &cmd[c]) != EOF, ++c){
+	  if (cmd[c] == '\n'){
+		  executeCommand(cmd);
+		  for (i = 0; i <= c; ++i){
+			  cmd[c] = 0;
+		  }
+	  }
+  }
   
 }
 
@@ -56,6 +65,25 @@ readLine(int i){
   
   mark[i] = 0.6*fin[i] + 0.25*midt[i] + 0.05*q1[i] + 0.05*q2[i] + 0.05*q3[i];
   
+}
+
+executeCommand(char command[]){
+	if (strcmp(command, "F") = 0){
+		fail();
+	}else if(strcmp(command, "top")){
+		top();
+	}else if(strcmp(command, "A"){
+		gradeA();
+	}else if(strcmp(command, "perA"){
+		perA();
+	}else if(strcmp(command, "anomaly"){
+		anomaly();
+	}else if((strcmp(command, "q") == 0) or ((strcmp(command, "Q")) == 0){
+		quit();
+		/*do something to exit program.*/
+	}else{
+		printf("Not a valid command.\n")
+	}
 }
 
 fail(){
