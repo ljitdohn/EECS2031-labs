@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX_LINE 1000
+#define MAX_NAME 8
 
 /*Lab 3*/
-/*This code is not completed*/
-
+/*This code is incorrect. I don't have time to finish it.*/
 int lines;
-long stdnum[lines];
-char stdfn[lines][9];
-char stdln[lines][9];
-char cmd[9]; 
-int fin[lines];
-int midt[lines];
-float q1[lines];
-float q2[lines];
-float q3[lines];
-float mark[lines];
+long stdnum[MAX_LINE];
+char stdfn[MAX_LINE][MAX_NAME];
+char stdln[MAX_LINE][MAX_NAME];
+char cmd[MAX_NAME]; 
+int fin[MAX_LINE];
+int midt[MAX_LINE];
+float q1[MAX_LINE];
+float q2[MAX_LINE];
+float q3[MAX_LINE];
+float mark[MAX_LINE];
 
 
 int main(){
@@ -24,44 +25,34 @@ int main(){
 
 onInit(){
   
-  /*get number of lines*/
-  scanf("%d", &lines);
-  
-  for (int i = 0; i < lines; ++i){
+  scanf("%d", &lines);	/*get number of lines*/
+  int i;
+  for ( i = 0; i < lines; ++i){
     readLine(i);
   }
   
-  /*get command*/
-  int c;
-  for(c = 0; scanf("%c", &cmd[c]) != EOF, ++c){
-	  if (cmd[c] == '\n'){
-		  cmd[++c] = '\0';
-		  executeCommand(cmd);
-		  for (i = 0; i <= c; ++i){
-			  cmd[c] = 0;
-		  }
-	  }
+/*get command*/
+  scanf("%s", &cmd);
+  executeCommand(cmd);
+  for (i = 0; i <= MAX_NAME; ++i){
+    cmd[i] = 0;
   }
-  
+    
 }
 
 readLine(int i){
   
-  int c;
-  
   scanf("%ld", stdnum[i]);/*scan std number*/
   
-  for(c = 0; c < 8 && scanf("%c", stdfn[i][c]) != ' '; ++c);	/*scan student first name*/
-  stdfn[i][++c] = '\0';
+  scanf("%s", stdfn[i]);/*scan student first name*/
   
-  for(c = 0; c < 8 && scanf("%c", stdln[i][c]) != ' '; ++c);	/*scan student last name*/
-  stdln[i][++c] = '\0';
+  scanf("%s", stdln[i]);/*scan student last name*/
   
-  scanf("%d", fin[i]); /*scan final grade*/
+  scanf("%d", fin[i]);/*scan final grade*/
   
-  scanf("%d", midt[i]); /*scan midterm grade*/
+  scanf("%d", midt[i]);/*scan midterm grade*/
   
-  scanf("%f", q1[i]); /*scan 3 quizzes*/
+  scanf("%f", q1[i]);/*scan 3 quizzes*/
   
   scanf("%f", q2[i]);
   
@@ -72,26 +63,27 @@ readLine(int i){
 }
 
 executeCommand(char command[]){
-	if (strcmp(command, "F") = 0){
-		fail();
-	}else if(strcmp(command, "top")){
-		top();
-	}else if(strcmp(command, "A"){
-		gradeA();
-	}else if(strcmp(command, "perA"){
-		perA();
-	}else if(strcmp(command, "anomaly"){
-		anomaly();
-	}else if((strcmp(command, "q") == 0) or ((strcmp(command, "Q")) == 0){
-		quit();
+  if (strcmp(command, "F") == 0){
+    fail();
+  }else if(strcmp(command, "top") == 0){
+    top();
+  }else if(strcmp(command, "A") == 0)	{
+    gradeA();
+  }else if(strcmp(command, "perA") == 0){
+    perA();
+  }else if(strcmp(command, "anomaly") == 0){
+    anomaly();
+  }else if((strcmp(command, "q") == 0) || (strcmp(command, "Q") == 0)){
+    quit();
 		/*do something to exit program.*/
-	}else{
-		printf("Not a valid command.\n");
-	}
+  }else{
+    printf("Not a valid command.\n");
+  }
 }
 
 fail(){
-  for(int c = 0; c < lines; c++){
+  int c;
+  for(c = 0; c < lines; c++){
     if(mark[c] < 50){
       printf("%ld\n", stdnum[c]);
     }
@@ -99,34 +91,37 @@ fail(){
 }
 
 top(){
-	int c;
-	double max = 0;
-  for (c = 0; c < lines; ++c){
-	 if(mark[c] >= max){
-		 max = mark[c];
-	 }
+  float maxscore = 0;
+  int c;
+  for(c = 0; c < lines; c++){
+    if(mark[c] > maxscore){
+      maxscore = mark[c];
+    }
   }
-  
-  for (c = 0; c < lines; ++c){
-	 if (mark[c] == max){
-		 printf("%s\n", stdln);
-	 }
+  for(c = 0; c < lines; c++){
+    if(mark[c] == maxscore){
+      printf("%ld  %s\n", stdnum[c], stdln[c]);
+    }
   }
 }
 
 gradeA(){
-  for(int c = 0; c < lines; c++){
+  int c;
+  for(c = 0; c < lines; c++){
     if(mark[c] >= 80){
       printf("%ld  %s\n", stdnum[c], stdln[c]);
     }
+  }
 }
 
 perA(){
   int count = 0;
-  for(int c = 0; c < lines; c++){
+  int c;
+  for(c = 0; c < lines; c++){
     if(mark[c] >= 80){
       count++;
     }
+  }
   double tbp = (double)count / (double)lines;  
   
   printf("Percentage of students with an average of A:%.2f%%\n", tbp);	
@@ -134,25 +129,26 @@ perA(){
 }
 
 anomaly(){
-
   if(lines > 15){
-    printf("NO");
+    printf("NO\n");
   }else{
     int count = 0;
-    for(int c = 0; c < lines; c++){
-      if(mark[c] >= 80 or mark[c] < 50){
+    int c;
+    for(c = 0; c < lines; c++){
+      if(mark[c] >= 80 || mark[c] < 50){
 	count++;
       }
+    }
     double tbp = (double)count / (double)lines; 
     if(tbp > 0.3){
-      printf("YES");
+      printf("YES\n");
     }else{
-      printf("NO");
+      printf("NO\n");
     }
     
   }
 }
 
 quit(){
-  printf("Thanks");
+  printf("Thanks\n");
 }
