@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*problem unsolved: fgetc(fp) keep getting the first char of the file.*/
+/*problem solved by changing the for loop into while loop.*/
 
 int main(){
   FILE *fp;
@@ -30,7 +30,7 @@ int main(){
    }
   
   /*read stream*/
-  for(c = fgetc(fp); c != EOF;){
+  while((c = fgetc(fp)) != EOF){
     printf("%c", c);
     if(c != '\n'){
       /*add up to sum*/
